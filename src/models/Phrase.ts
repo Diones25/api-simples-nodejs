@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../instances/pg";
+import { conn } from "../instances/pg";
 
 export interface PhraseInstance extends Model {
     id: number,
@@ -7,7 +7,7 @@ export interface PhraseInstance extends Model {
     txt: string
 }
 
-export const Phrase = sequelize.define<PhraseInstance>('Phrase', {
+export const Phrase = conn.define<PhraseInstance>('Phrase', {
     id: {
         primaryKey: true,
         autoIncrement: true,

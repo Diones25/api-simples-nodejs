@@ -3,6 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api';
 import cors from 'cors';
+import  { conn } from './instances/pg';
 
 dotenv.config();
 
@@ -20,4 +21,13 @@ server.use((req: Request, res: Response) => {
     res.json({error: 'Endpoint não encontrado.'});
 });
 
-server.listen(process.env.PORT);
+conn
+.sync()
+//.sync({ force: true })
+.then(() => {
+    server.listen(process.env.PORT, () => {
+        console.log(`Servidor rodando: http://localhost:${process.env.PORT}`)
+    });
+}).catch((err) => {
+    console.log((`ERRO DE CONEXÃO: ${err}`));
+});
